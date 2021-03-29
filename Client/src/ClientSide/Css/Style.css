@@ -1,0 +1,109 @@
+.button
+{
+   -fx-background-color:  #FFBF6F;
+   transition-duration: 0.4s;
+   border-radius: 12px;
+}
+
+.button:hover {
+  -fx-background-color: #CE9345;
+}
+
+.button:pressed
+{
+-fx-background-color: #9E6A1C;
+}
+
+.text
+{
+-fx-background-color: #686868;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#9b6808, #b37707, #cb8705, #e59603, #ffa600);
+    -fx-text-fill: white;
+}
+
+.list-cell:even {
+    -fx-background-color:  #686868;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+.list-cell:odd
+{
+-fx-background-color:  #393939;
+-fx-text-fill: white;
+-fx-font-size: 14px;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #CE9345;
+    -fx-text-fill: white;
+}
+
+.thumb
+{
+-fx-background-color:  #FFBF6F;
+}
+
+.track
+{
+-fx-background-color:  #393939;
+}
+
+.decrement-arrow
+{
+-fx-text-fill: white;
+}
+
+.increment-arrow
+{
+fx-text-fill: white;
+}
+
+.decrement-button
+{
+-fx-background-color:  #393939;
+}
+
+.increment-button
+{
+-fx-background-color:  #393939;
+}
+
+.dialog-pane .button
+{
+   -fx-background-color:  #FFBF6F;
+   transition-duration: 0.4s;
+   border-radius: 12px;
+   -fx-font-weight: bold;
+}
+
+.dialog-pane .button:hover
+{
+ -fx-background-color: #CE9345;
+}
+
+.dialog-pane .button:pressed
+{
+-fx-background-color: #9E6A1C;
+}
+
+.dialog-pane
+{
+-fx-background-color:  #393939;
+
+}
+.dialog-pane > .content.label
+{
+-fx-text-fill: white;
+}
+.myDialog:header *.header-panel{
+-fx-background-color:  #393939;
+
+}
+.myDialog:header *.header-panel *.label{
+    -fx-font-weight: bold;
+-fx-text-fill: white;
+}
+

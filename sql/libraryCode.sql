@@ -1,0 +1,272 @@
+CREATE SCHEMA LIBRARY;
+SET SEARCH_PATH TO LIBRARY;
+
+/*CREATE DOMAINS AND TABLES*/
+
+CREATE DOMAIN Cprs AS DECIMAL(10) NOT NULL;
+CREATE DOMAIN Credit AS DECIMAL(16) NOT NULL;
+CREATE DOMAIN Id AS DECIMAL(10) NOT NULL;
+CREATE DOMAIN Title VARCHAR(150) NOT NULL;
+CREATE DOMAIN Years DECIMAL(4) NOT NULL;
+CREATE DOMAIN Names VARCHAR(100) NOT NULL;
+
+CREATE TABLE Customer(
+	cpr Cprs PRIMARY KEY,
+	password VARCHAR(100) NOT NULL,
+	name Names,
+	address VARCHAR(200) NOT NULL,
+	creditCard Credit
+);
+
+CREATE TABLE Book(
+	item_id Id PRIMARY KEY,
+	book_title Title,
+	yearOfPublishing Years
+);
+
+CREATE TABLE GENRE(
+	genreName Names PRIMARY KEY
+);
+
+CREATE TABLE Author(
+	author_id Id PRIMARY KEY,
+	authorName Names
+);
+
+CREATE TABLE Movie(
+	item_id Id PRIMARY KEY,
+	movie_title Title,
+	yearOfPublishing Years
+);
+
+CREATE TABLE VideoGame(
+	item_id Id PRIMARY KEY,
+	game_title Title,
+	yearOfPublishing Years
+);
+
+CREATE TABLE Developer(
+	developer_id Id PRIMARY KEY,
+	developerName Names
+);
+
+CREATE TABLE Publisher(
+	publisher_id Id PRIMARY KEY,
+	publisherName Names
+);
+
+CREATE TABLE ProductionCompany(
+	productionCompany_id Id PRIMARY KEY,
+	productionCompanyName Names
+);
+
+ALTER TABLE BOOK ADD COLUMN published_by DECIMAL(10);
+ALTER TABLE BOOK ADD FOREIGN KEY(published_by) REFERENCES Publisher(publisher_id);
+
+ALTER TABLE VIDEOGAME ADD COLUMN published_by DECIMAL(10);
+ALTER TABLE VIDEOGAME ADD FOREIGN KEY(published_by) REFERENCES Publisher(publisher_id);
+
+CREATE TABLE CustomerBook(
+	cpr Cprs,
+	item_id Id,
+	PRIMARY KEY(cpr, item_id),
+	FOREIGN KEY(cpr) REFERENCES CUSTOMER(cpr),
+	FOREIGN KEY(item_id) REFERENCES BOOK(item_id)
+);
+
+CREATE TABLE CustomerMovie(
+	cpr Cprs,
+	item_id Id,
+	PRIMARY KEY(cpr, item_id),
+	FOREIGN KEY(cpr) REFERENCES CUSTOMER(cpr),
+	FOREIGN KEY(item_id) REFERENCES MOVIE(item_id)
+);
+
+CREATE TABLE CustomerVideoGame(
+	cpr Cprs,
+	item_id Id,
+	PRIMARY KEY(cpr, item_id),
+	FOREIGN KEY(cpr) REFERENCES CUSTOMER(cpr),
+	FOREIGN KEY(item_id) REFERENCES VIDEOGAME(item_id)
+);
+
+CREATE TABLE BookAuthor(
+	item_id Id,
+	author_id Id,
+	PRIMARY KEY(item_id, author_id),
+	FOREIGN KEY(item_id) REFERENCES BOOK(item_id),
+	FOREIGN KEY(author_id) REFERENCES AUTHOR(author_id)
+);
+
+CREATE TABLE VideoGameDeveloper(
+	item_id Id,
+	developer_id Id,
+	PRIMARY KEY(item_id, developer_id),
+	FOREIGN KEY(item_id) REFERENCES VIDEOGAME(item_id),
+	FOREIGN KEY(developer_id) REFERENCES DEVELOPER(developer_id)
+);
+
+CREATE TABLE MovieProductionCompany(
+	item_id Id,
+	productionCompany_id Id,
+	PRIMARY KEY(item_id, productionCompany_id),
+	FOREIGN KEY(item_id) REFERENCES MOVIE(item_id),
+	FOREIGN KEY(productionCompany_id) REFERENCES PRODUCTIONCOMPANY(productionCompany_id)
+);
+
+CREATE TABLE BookGenre(
+	item_id Id,
+	genreName Names,
+	PRIMARY KEY(item_id, genreName),
+	FOREIGN KEY(item_id) REFERENCES BOOK(item_id),
+	FOREIGN KEY(genreName) REFERENCES GENRE(genreName)
+);
+
+CREATE TABLE MovieGenre(
+	item_id Id,
+	genreName Names,
+	PRIMARY KEY(item_id, genreName),
+	FOREIGN KEY(item_id) REFERENCES MOVIE(item_id),
+	FOREIGN KEY(genreName) REFERENCES GENRE(genreName)
+);
+
+CREATE TABLE VideoGameGenre(
+	item_id Id,
+	genreName Names,
+	PRIMARY KEY(item_id, genreName),
+	FOREIGN KEY(item_id) REFERENCES VIDEOGAME(item_id),
+	FOREIGN KEY(genreName) REFERENCES GENRE(genreName)
+);
+
+CREATE TABLE has_borrowedBook(
+	cpr Cprs,
+	item_id Id,
+	dateFrom Date,
+	dateDue Date,
+	dateTo Date,
+	fine DECIMAL(10),
+	finePaid DECIMAL(10),
+	PRIMARY KEY(cpr, item_id),
+	FOREIGN KEY(cpr) REFERENCES CUSTOMER(cpr),
+	FOREIGN KEY(item_id) REFERENCES BOOK(item_id)
+);
+
+CREATE TABLE has_borrowedMovie(
+	cpr Cprs,
+	item_id Id,
+	dateFrom Date,
+	dateDue Date,
+	dateTo Date,
+	fine DECIMAL(10),
+	finePaid DECIMAL(10),
+	PRIMARY KEY(cpr, item_id),
+	FOREIGN KEY(cpr) REFERENCES CUSTOMER(cpr),
+	FOREIGN KEY(item_id) REFERENCES MOVIE(item_id)
+);
+
+CREATE TABLE has_borrowedVideoGame(
+	cpr Cprs,
+	item_id Id,
+	dateFrom Date,
+	dateDue Date,
+	dateTo Date,
+	fine DECIMAL(10),
+	finePaid DECIMAL(10),
+	PRIMARY KEY(cpr, item_id),
+	FOREIGN KEY(cpr) REFERENCES CUSTOMER(cpr),
+	FOREIGN KEY(item_id) REFERENCES VIDEOGAME(item_id)
+);
+
+
+/*INSERT STATEMENTS
+PUBLISHER ID = 100
+PRODUCTIONCOMPANY ID = 200
+BOOK ID = 300
+MOVIE ID = 400
+VIDEGAME ID = 500
+AUTHOR ID = 600
+PERSON ID = 700
+DEVELOPER ID = 800*/
+
+INSERT INTO PUBLISHER VALUES('111', 'Bloomsbury');
+INSERT INTO PUBLISHER VALUES('112', 'Allen and Unwin');
+INSERT INTO PUBLISHER VALUES('113', 'Prentice Hall');
+INSERT INTO PUBLISHER VALUES('114', 'Sony Interactive Entertainment');
+INSERT INTO PUBLISHER VALUES('115', 'CD Projekt');
+INSERT INTO PUBLISHER VALUES('116', 'Rockstar Games');
+
+INSERT INTO PRODUCTIONCOMPANY VALUES('211', 'New Line Cinema');
+INSERT INTO PRODUCTIONCOMPANY VALUES('212', 'WingNut Films');
+INSERT INTO PRODUCTIONCOMPANY VALUES('213', 'Metro Goldwyn Mayer');
+INSERT INTO PRODUCTIONCOMPANY VALUES('214', 'Thunder Road Pictures');
+
+INSERT INTO GENRE VALUES('Action');
+INSERT INTO GENRE VALUES('Rpg');
+INSERT INTO GENRE VALUES('Action adventure');
+INSERT INTO GENRE VALUES('Art game');
+INSERT INTO GENRE VALUES('Hack and slash');
+INSERT INTO GENRE VALUES('Fantasy');
+INSERT INTO GENRE VALUES('Adventure');
+INSERT INTO GENRE VALUES('Neo noir');
+INSERT INTO GENRE VALUES('Education');
+
+INSERT INTO BOOK VALUES('311', 'Harry Potter and the Order of the Phoenix', '2003', '111');
+INSERT INTO BOOK VALUES('312', 'Harry Potter and the Deathly Hallows', '2007', '111');
+INSERT INTO BOOK VALUES('313', 'The Hobbit', '1937', '112');
+INSERT INTO BOOK VALUES('314', 'Applying UML and Patterns', '1997', '113');
+
+INSERT INTO AUTHOR VALUES('611', 'J. K. Rowling');
+INSERT INTO AUTHOR VALUES('612', 'J. R. R. Tolkien');
+INSERT INTO AUTHOR VALUES('613', 'Craig Larman');
+
+INSERT INTO MOVIE VALUES('411', 'The Lord of the Rings: The Return of the King', '2003');
+INSERT INTO MOVIE VALUES('412', 'The Hobbit: An Unexpected Journey', '2012');
+INSERT INTO MOVIE VALUES('413', 'John Wick', '2014');
+
+INSERT INTO VIDEOGAME VALUES('511', 'God of War', '2018', '114');
+INSERT INTO VIDEOGAME VALUES('512', 'The Witcher 3: Wild Hunt', '2015', '115');
+INSERT INTO VIDEOGAME VALUES('513', 'Journey', '2012', '114');
+INSERT INTO VIDEOGAME VALUES('514', 'Red Dead Redemption 2', '2018', '116');
+
+INSERT INTO DEVELOPER VALUES('811', 'Santa Monica Studio');
+INSERT INTO DEVELOPER VALUES('812', 'CD Projekt Red');
+INSERT INTO DEVELOPER VALUES('813', 'Rockstar Games');
+INSERT INTO DEVELOPER VALUES('814', 'Thatgamecompany');
+
+INSERT INTO BOOKAUTHOR VALUES('311', '611');
+INSERT INTO BOOKAUTHOR VALUES('312', '611');
+INSERT INTO BOOKAUTHOR VALUES('313', '612');
+INSERT INTO BOOKAUTHOR VALUES('314', '613');
+
+INSERT INTO VIDEOGAMEDEVELOPER VALUES('511', '811');
+INSERT INTO VIDEOGAMEDEVELOPER VALUES('512', '812');
+INSERT INTO VIDEOGAMEDEVELOPER VALUES('513', '811');
+INSERT INTO VIDEOGAMEDEVELOPER VALUES('513', '814');
+INSERT INTO VIDEOGAMEDEVELOPER VALUES('514', '813');
+
+INSERT INTO MOVIEPRODUCTIONCOMPANY VALUES('411', '211');
+INSERT INTO MOVIEPRODUCTIONCOMPANY VALUES('411', '212');
+INSERT INTO MOVIEPRODUCTIONCOMPANY VALUES('412', '211');
+INSERT INTO MOVIEPRODUCTIONCOMPANY VALUES('412', '212');
+INSERT INTO MOVIEPRODUCTIONCOMPANY VALUES('412', '213');
+INSERT INTO MOVIEPRODUCTIONCOMPANY VALUES('413', '214');
+
+INSERT INTO BOOKGENRE VALUES('311', 'Fantasy');
+INSERT INTO BOOKGENRE VALUES('312', 'Fantasy');
+INSERT INTO BOOKGENRE VALUES('313', 'Fantasy');
+INSERT INTO BOOKGENRE VALUES('314', 'Education');
+
+INSERT INTO MOVIEGENRE VALUES('411', 'Fantasy');
+INSERT INTO MOVIEGENRE VALUES('411', 'Adventure');
+INSERT INTO MOVIEGENRE VALUES('412', 'Fantasy');
+INSERT INTO MOVIEGENRE VALUES('412', 'Adventure');
+INSERT INTO MOVIEGENRE VALUES('413', 'Neo noir');
+INSERT INTO MOVIEGENRE VALUES('413', 'Action');
+
+INSERT INTO VIDEOGAMEGENRE VALUES('511', 'Action adventure');
+INSERT INTO VIDEOGAMEGENRE VALUES('511', 'Hack and slash');
+INSERT INTO VIDEOGAMEGENRE VALUES('512', 'Action');
+INSERT INTO VIDEOGAMEGENRE VALUES('512', 'Rpg');
+INSERT INTO VIDEOGAMEGENRE VALUES('513', 'Adventure');
+INSERT INTO VIDEOGAMEGENRE VALUES('513', 'Art game');
+INSERT INTO VIDEOGAMEGENRE VALUES('514', 'Action adventure');

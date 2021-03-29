@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="488.0" prefWidth="800.0" style="-fx-background-color: #393939;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientSide.View.MyItemsWindow.MyItemsWindowController">
+   <children>
+      <ListView fx:id="list" layoutX="29.0" layoutY="28.0" prefHeight="356.0" prefWidth="743.0" stylesheets="@../../Css/Style.css" />
+      <Button layoutX="29.0" layoutY="401.0" mnemonicParsing="false" onAction="#back" prefHeight="56.0" prefWidth="131.0" stylesheets="@../../Css/Style.css" text="Back" />
+      <Button layoutX="641.0" layoutY="401.0" mnemonicParsing="false" onAction="#returnitem" prefHeight="56.0" prefWidth="131.0" stylesheets="@../../Css/Style.css" text="Return" />
+   </children>
+</AnchorPane>

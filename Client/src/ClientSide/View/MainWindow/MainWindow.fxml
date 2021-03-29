@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="414.0" style="-fx-background-color: #393939;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientSide.View.MainWindow.MainWindowController">
+   <children>
+      <Button layoutX="55.0" layoutY="222.0" mnemonicParsing="false" onAction="#openEdit" prefHeight="45.0" prefWidth="120.0" stylesheets="@../../Css/Style.css" text="Edit User" />
+      <Label fx:id="welcome" layoutX="66.0" layoutY="38.0" text="Welcome" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font></Label>
+      <Button layoutX="239.0" layoutY="222.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="120.0" stylesheets="@../../Css/Style.css" text="Log out" />
+      <Button layoutX="55.0" layoutY="142.0" mnemonicParsing="false" onAction="#borrow" prefHeight="45.0" prefWidth="120.0" stylesheets="@../../Css/Style.css" text="Library Items" />
+      <Button layoutX="239.0" layoutY="142.0" mnemonicParsing="false" onAction="#myItems" prefHeight="45.0" prefWidth="120.0" stylesheets="@../../Css/Style.css" text="My Items" />
+   </children>
+</AnchorPane>
